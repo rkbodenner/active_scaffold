@@ -49,7 +49,7 @@ module ActiveScaffold
       columns.each :for => parent_record, :action => action, :flatten => true do |column|
         if multi_parameter_attributes.has_key? column.name
           parent_record.send(:assign_multiparameter_attributes, multi_parameter_attributes[column.name])
-        elsif attributes.has_key? column.name or attributes.has_key? column.association.options[:foreign_key]
+        elsif attributes.has_key? column.name or (column.singular_association? and attributes.has_key? column.association.options[:foreign_key])
           if attributes.has_key? column.name
             value = attributes[column.name] 
           else
